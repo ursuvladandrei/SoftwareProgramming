@@ -1,0 +1,19 @@
+
+# https://leetcode.com/
+# https://www.techiedelight.com/
+# https://medium.com/techie-delight/500-data-structures-and-algorithms-practice-problems-35afe8a1e222
+# https://github.com/bollwarm/DataStructuresAlgorithms?tab=readme-ov-file
+# https://tenderleo.gitbooks.io/leetcode-solutions-/content/GoogleMedium/280.html
+# https://algo.monster/liteproblems/242
+# https://www.codecademy.com/
+# https://projecteuler.net/archives
+# https://rosettacode.org/wiki/Category:Programming_Tasks?pageuntil=Compiler%2Fcode+generator#mw-pages
+# https://www.codewars.com/
+# https://www.freecodecamp.org/news/the-10-most-popular-coding-challenge-websites-of-2016-fb8a5672d22f/
+# https://www.geeksforgeeks.org/explore?page=1&sortBy=submissions
+# https://www.topcoder.com/
+# https://www.coderbyte.com/developers?utm_campaign=NewHomepage
+# https://www.hackerrank.com/dashboard
+# https://www.codechef.com/
+# https://exercism.org/
+# https://codeforces.com/problemset/page/93

@@ -1,0 +1,15 @@
+C:\Users\vursu\Documents\Programming\CSharp\src\bin\Debug\net7.0\src.exe
+C:\Users\vursu\Documents\Programming\CSharp\src\bin\Debug\net7.0\src.deps.json
+C:\Users\vursu\Documents\Programming\CSharp\src\bin\Debug\net7.0\src.runtimeconfig.json
+C:\Users\vursu\Documents\Programming\CSharp\src\bin\Debug\net7.0\src.dll
+C:\Users\vursu\Documents\Programming\CSharp\src\bin\Debug\net7.0\src.pdb
+C:\Users\vursu\Documents\Programming\CSharp\src\obj\Debug\net7.0\src.csproj.AssemblyReference.cache
+C:\Users\vursu\Documents\Programming\CSharp\src\obj\Debug\net7.0\src.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\vursu\Documents\Programming\CSharp\src\obj\Debug\net7.0\src.AssemblyInfoInputs.cache
+C:\Users\vursu\Documents\Programming\CSharp\src\obj\Debug\net7.0\src.AssemblyInfo.cs
+C:\Users\vursu\Documents\Programming\CSharp\src\obj\Debug\net7.0\src.csproj.CoreCompileInputs.cache
+C:\Users\vursu\Documents\Programming\CSharp\src\obj\Debug\net7.0\src.dll
+C:\Users\vursu\Documents\Programming\CSharp\src\obj\Debug\net7.0\refint\src.dll
+C:\Users\vursu\Documents\Programming\CSharp\src\obj\Debug\net7.0\src.pdb
+C:\Users\vursu\Documents\Programming\CSharp\src\obj\Debug\net7.0\src.genruntimeconfig.cache
+C:\Users\vursu\Documents\Programming\CSharp\src\obj\Debug\net7.0\ref\src.dll

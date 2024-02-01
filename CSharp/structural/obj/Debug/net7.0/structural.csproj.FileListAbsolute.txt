@@ -1,0 +1,15 @@
+C:\Users\vursu\Documents\Programming\CSharp\structural\bin\Debug\net7.0\structural.exe
+C:\Users\vursu\Documents\Programming\CSharp\structural\bin\Debug\net7.0\structural.deps.json
+C:\Users\vursu\Documents\Programming\CSharp\structural\bin\Debug\net7.0\structural.runtimeconfig.json
+C:\Users\vursu\Documents\Programming\CSharp\structural\bin\Debug\net7.0\structural.dll
+C:\Users\vursu\Documents\Programming\CSharp\structural\bin\Debug\net7.0\structural.pdb
+C:\Users\vursu\Documents\Programming\CSharp\structural\obj\Debug\net7.0\structural.csproj.AssemblyReference.cache
+C:\Users\vursu\Documents\Programming\CSharp\structural\obj\Debug\net7.0\structural.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\vursu\Documents\Programming\CSharp\structural\obj\Debug\net7.0\structural.AssemblyInfoInputs.cache
+C:\Users\vursu\Documents\Programming\CSharp\structural\obj\Debug\net7.0\structural.AssemblyInfo.cs
+C:\Users\vursu\Documents\Programming\CSharp\structural\obj\Debug\net7.0\structural.csproj.CoreCompileInputs.cache
+C:\Users\vursu\Documents\Programming\CSharp\structural\obj\Debug\net7.0\structural.dll
+C:\Users\vursu\Documents\Programming\CSharp\structural\obj\Debug\net7.0\refint\structural.dll
+C:\Users\vursu\Documents\Programming\CSharp\structural\obj\Debug\net7.0\structural.pdb
+C:\Users\vursu\Documents\Programming\CSharp\structural\obj\Debug\net7.0\structural.genruntimeconfig.cache
+C:\Users\vursu\Documents\Programming\CSharp\structural\obj\Debug\net7.0\ref\structural.dll

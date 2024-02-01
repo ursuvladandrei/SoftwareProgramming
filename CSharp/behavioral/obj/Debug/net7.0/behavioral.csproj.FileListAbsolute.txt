@@ -1,0 +1,15 @@
+C:\Users\vursu\Documents\Programming\CSharp\behavioral\obj\Debug\net7.0\behavioral.csproj.AssemblyReference.cache
+C:\Users\vursu\Documents\Programming\CSharp\behavioral\obj\Debug\net7.0\behavioral.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\vursu\Documents\Programming\CSharp\behavioral\obj\Debug\net7.0\behavioral.AssemblyInfoInputs.cache
+C:\Users\vursu\Documents\Programming\CSharp\behavioral\obj\Debug\net7.0\behavioral.AssemblyInfo.cs
+C:\Users\vursu\Documents\Programming\CSharp\behavioral\obj\Debug\net7.0\behavioral.csproj.CoreCompileInputs.cache
+C:\Users\vursu\Documents\Programming\CSharp\behavioral\bin\Debug\net7.0\behavioral.exe
+C:\Users\vursu\Documents\Programming\CSharp\behavioral\bin\Debug\net7.0\behavioral.deps.json
+C:\Users\vursu\Documents\Programming\CSharp\behavioral\bin\Debug\net7.0\behavioral.runtimeconfig.json
+C:\Users\vursu\Documents\Programming\CSharp\behavioral\bin\Debug\net7.0\behavioral.dll
+C:\Users\vursu\Documents\Programming\CSharp\behavioral\bin\Debug\net7.0\behavioral.pdb
+C:\Users\vursu\Documents\Programming\CSharp\behavioral\obj\Debug\net7.0\behavioral.dll
+C:\Users\vursu\Documents\Programming\CSharp\behavioral\obj\Debug\net7.0\refint\behavioral.dll
+C:\Users\vursu\Documents\Programming\CSharp\behavioral\obj\Debug\net7.0\behavioral.pdb
+C:\Users\vursu\Documents\Programming\CSharp\behavioral\obj\Debug\net7.0\behavioral.genruntimeconfig.cache
+C:\Users\vursu\Documents\Programming\CSharp\behavioral\obj\Debug\net7.0\ref\behavioral.dll
