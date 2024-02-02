@@ -638,62 +638,122 @@
 # 5.6 #41: Substrings and memory leaks 
 
 ##############################################################################
-# 6 Functions and methods
+### 6 Functions and methods
 ##############################################################################
-# 6.1 #42: Not knowing which type of receiver to use
-# with a value receiver, Go makes a copy of the value and passes it to the method
-# with a pointer receiver, Go passes the address of an object to the method
-# the correct way to modify the balance:
-# type customer struct {
-#     balance float64    
-# }
-# func (c *customer) add(operation float64) {
-#     c.balance += operation    
-# }
-# a receiver must be a pointer:
-# - if the method needs to mutate the receiver
-# - if the method receiver contains a field that cannot be copied
-# a receiver should be a pointer:
-# - if the receiver is a large object
-# a receiver must be a value:
-# - if we have to enforce a receiver's immutability
-# - if the receiver is a map, function, or channel
-# a receiver should be a value:
-# - if the receiver is a slice that doesn't have to be mutated
-# - if the receiver is a small array or struct that is naturally a value type
-# without mutable fields, such as time.Time
-# - if the receiver is a basic type such as int, float64, string
+#### 6.1 #42: Not knowing which type of receiver to use
+- with a value receiver, Go makes a copy of the value and passes it to the method
+- with a pointer receiver, Go passes the address of an object to the method
+- the correct way to modify the balance:
+```
+type customer struct {
+    balance float64    
+}
+func (c *customer) add(operation float64) {
+    c.balance += operation    
+}
+```
+- a receiver must be a pointer:
+    - if the method needs to mutate the receiver
+    - if the method receiver contains a field that cannot be copied
+- a receiver should be a pointer:
+    - if the receiver is a large object
+- a receiver must be a value:
+    - if we have to enforce a receiver's immutability
+    - if the receiver is a map, function, or channel
+- a receiver should be a value:
+    - if the receiver is a slice that doesn't have to be mutated
+    - if the receiver is a small array or struct that is naturally a value type
+    - without mutable fields, such as time.Time
+    - if the receiver is a basic type such as int, float64, string
 
-# 6.2 #43: Never using named result parameters
-# b is also initialized to their zero value
-# func f(a int) (b int) {
-#     b = a    
-#     return
-# }
+#### 6.2 #43: Never using named result parameters
+- b is also initialized to their zero value
+```
+func f(a int) (b int) {
+    b = a    
+    return
+}
+```
 
-# 6.3 #44: Unintended side effects with named result parameters
-# because each name result parameter is initialized to their zero value
-# this can lead to subtle bugs
+#### 6.3 #44: Unintended side effects with named result parameters
+- because each name result parameter is initialized to their zero value
+this can lead to subtle bugs
 
-# 6.4 #45: Returning a nil receiver
-# having a nil receiver is allowed, and an interface converted from a nil
-# pointer isn't a nil interface
-# when we have to return an interface, we should return not a nil pointer, but
-# a nil value directly
+#### 6.4 #45: Returning a nil receiver
+- having a nil receiver is allowed, and an interface converted from a nil
+- pointer isn't a nil interface
+- when we have to return an interface, we should return not a nil pointer, but
+- a nil value directly
 
-# 6.5 #46: Using a filename as a function input
-# instead of using:
-# func countEmptyLinesInFile(filename string) (int, error) {}
-# use:
-# func countEmptyLines(reader io.Reader) (int, error) {}
-# accepting a filename as a function input to read from a file should, in most
-# cases, be considered a code smell; using the io.Reader interface abstracts the
-# data source (regardless whether the input is a file, a string, an HTTP request, 
-# or a gRPC request)
+#### 6.5 #46: Using a filename as a function input
+- instead of using:
+```func countEmptyLinesInFile(filename string) (int, error) {}```
+- use:
+```func countEmptyLines(reader io.Reader) (int, error) {}```
+- accepting a filename as a function input to read from a file should, in most
+cases, be considered a code smell; using the io.Reader interface abstracts the
+data source (regardless whether the input is a file, a string, an HTTP request, 
+or a gRPC request)
 
-# 6.6 #47: Ignoring how defer arguments and receivers are evaluated
+#### 6.6 #47: Ignoring how defer arguments and receivers are evaluated
+- using defer evaluates the arguments right away (use address of variable)  
+```
+const (
+    StatusSuccess = "success"
+    StatusErrorFoo = "error_foo"
+    StatusErrorBar = "error_bar
+)
+
+func f() error {  
+    var status string  
+    defer notify(&status)  
+    defer incrementCounter(&status)
 
 
+    if err := foo(); err != nil {  
+        status = StatusErrorFoo
+        return err
+    }
+
+    if err := bar(); err != nil {
+        status = StatusErrorBar
+        return err
+    }
+
+    status = StatusSuccess
+    return nil
+}
+```
+or we could have used closures:
+```
+func f() error {
+    var status string
+    defer func() {
+        notify(status)
+        incrementCounter(status)
+    }()
+}
+```
+- for a method, the receiver is also evaluated immediately
+```
+func main() {
+    s := &Struct{id: "foo"}
+    defer s.print()
+    s.id = "bar"
+}
+```
+
+##############################################################################
+### 7 Error management
+##############################################################################
+
+#### 7.1 #48: Panicking
+#### 7.2 #49: Ignoring when to wrap an error  
+#### 7.3 #50: Checking an error type inaccurately
+#### 7.4 #51: Checking an error value inaccurately
+#### 7.5 #52: Handling an error twice
+#### 7.6 #53: Not handling an error
+#### 7.7 #54: Not handling defer errors
 
 
 
