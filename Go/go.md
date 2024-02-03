@@ -434,32 +434,30 @@
 
 
 
-# Important:
-# 1. Learning Go - Jon Bodner (2024) - good
-# 2. 100 Go Mistakes and How to Avoid Them - Teiva Harsanyi (2022) - good
-# 3. Practical Go - Amit Saha (2021) - good
-# 4. Cloud Native Go - Matthew Timus (2021) - good
-# 5. Hands-On Software Engineering with Golang - Achilleas (2020) - good
-# 6. Head First Go - Jay McGavren (2019) - good
-# 7. Security with Go - John Daniel Leon (2018) - good
-# 8. Concurrency in Go - Katherine Cox-Buday (2017) - good
-# 9. The Go Programming Language - Alan Donovan (2015) - good
-# 10. Go in Action - William Kennedy (2015) - good
+### Go books
+#### 1. Learning Go - Jon Bodner (2024) - good
+#### 2. 100 Go Mistakes and How to Avoid Them - Teiva Harsanyi (2022) - good
+#### 3. Practical Go - Amit Saha (2021) - good
+#### 4. Cloud Native Go - Matthew Timus (2021) - good
+#### 5. Hands-On Software Engineering with Golang - Achilleas (2020) - good
+#### 6. Head First Go - Jay McGavren (2019) - good
+#### 7. Security with Go - John Daniel Leon (2018) - good
+#### 8. Concurrency in Go - Katherine Cox-Buday (2017) - good
+#### 9. The Go Programming Language - Alan Donovan (2015) - good
+#### 10. Go in Action - William Kennedy (2015) - good
 
-# Maybe:
-# 1. The Go Workshop - Dello D'Anna (2019) - just skim it
-# 2. Go Programming Blueprints - Seocnd Edition (2016) - Mat Ryer - good project ideas
-# 3. Hands-On Dependency Injection In Go - Carey Scott (2018)
-# - Dependency Injection With Monkey Patching/Constructor Injection/Method Injection/
-# By Config/Just-In-Time/Off-The-Shelf
-# 4. Go Cookbook - Sau Sheong Chang (2023) - just skim it
-# 5. Mastering Go - Third Edition - Mihalis Tsoukalos (2021) - just skim it
-# 6. Network Programming with Go - Adam Woodbeck (2021) - just skim it
-# 7. Distributed Services With Go - Travis Jeffery (2021) - just skim it
-# 8. Black Hat Go - Tom Steele (2020) - just skim it
-# 9. Go Programming Cookbook - Aaron Torres (2019) - just skim it
-# 10. Hands-On Programming with Go - Alex Guerrieri (2019) - just skim it
-# 11. Get Programming with Go - Nathan Youngman (2018) - just skim it
+### Maybe:
+#### 1. The Go Workshop - Dello D'Anna (2019) - just skim it
+#### 2. Go Programming Blueprints - Seocnd Edition (2016) - Mat Ryer - good project ideas
+#### 3. Hands-On Dependency Injection In Go - Carey Scott (2018) - Dependency Injection With Monkey Patching/Constructor Injection/Method Injection/By Config/Just-In-Time/Off-The-Shelf
+#### 4. Go Cookbook - Sau Sheong Chang (2023) - just skim it
+#### 5. Mastering Go - Third Edition - Mihalis Tsoukalos (2021) - just skim it
+#### 6. Network Programming with Go - Adam Woodbeck (2021) - just skim it
+#### 7. Distributed Services With Go - Travis Jeffery (2021) - just skim it
+#### 8. Black Hat Go - Tom Steele (2020) - just skim it
+#### 9. Go Programming Cookbook - Aaron Torres (2019) - just skim it
+#### 10. Hands-On Programming with Go - Alex Guerrieri (2019) - just skim it
+#### 11. Get Programming with Go - Nathan Youngman (2018) - just skim it
 
 
 
@@ -469,9 +467,12 @@
 ##############################################################################
 # https://learning.oreilly.com/library/view/100-go-mistakes/9781617299599/
 
+##############################################################################
+### 2 Code And Project Organization
+##############################################################################
 
 ##############################################################################
-# 3 Data Types
+### 3 Data Types
 ##############################################################################
 
 # 3.1 #17: Creating confusion with octal literals
@@ -746,19 +747,148 @@ func main() {
 ##############################################################################
 ### 7 Error management
 ##############################################################################
-
 #### 7.1 #48: Panicking
+- error management should be done with a function that returns a proper error type
+as the last parameter
+- the proper way to use defer + panic + recover
+
+```
+func main() {
+    defer func () {
+        if r := recover(); r != nil {
+            fmt.Println("recover", r)
+        }
+    }()
+
+    f()
+}
+
+func f() {
+    fmt.Println("a")
+    panic("foo")
+    fmt.Println("b")
+}
+
+```
+
 #### 7.2 #49: Ignoring when to wrap an error  
+- reasons to do it:
+    - adding additional context to an error
+    - marking an error as a specific error
+- to wrap an error:
+```
+if err != nil {
+    return fmt.Errorf("bar failed: %w", err)
+}
+```
+- to transform an error:
+```
+if err != nil {
+    return fmt.Errorf("bar failed: %v", err)
+}
+```
+
 #### 7.3 #50: Checking an error type inaccurately
+- use errors.As to check an error is a specific type
+```
+type transientError struct {
+    err error
+}
+
+func (t transientError) Error() string {
+    return fmt.Sprintf("transient error: %v", t.err)
+}
+
+func getTransactionAmountFromDB(transactionID string) (float32, error) {
+    // ...
+    if err != nil {
+        return 0, transientError(err: err)
+    }
+    // ...
+}
+
+func getTransactionAmount(transactionID string) (float32, error) {
+    if len(transactionID) != 5 {
+        return 0, fmt.Errorf("id is invalid: %s", transactionID)
+    }
+
+    // assume this returns a transientError
+    amount, err := getTransactionAmountFromDB(transactionID)
+    if err != nil {
+        // replaced this line
+        // return 0, transientError(err: err)
+        return 0, fmt.Errorf("failed to get transaction %s: %w", transactionID, err)
+    }
+    return amount, nil
+}
+
+func handler(w http.ResponseWriter, r *http.Request) {
+    // get transaction ID
+
+    amount, err := getTransactionAmount(transactionID)
+    if err != nil {
+        if errors.As(err, &transientError{}) {
+            http.Error(w, err.Error(), http.StatusServiceUnavailable)
+        } else {
+            http.Error(w, err.Error(), http.StatusBadRequest)
+        }
+        return
+    }
+}
+```
+
 #### 7.4 #51: Checking an error value inaccurately
+- sentinel errors convey an expected error that clients will expect to check
+```
+var ErrFoo = errors.New("foo")
+```
+- unexpected errors should be designed as error types
+```
+type BarError struct { ... }
+```
+- errors.Is can recursively unwrap an error and compare each error in the chain
+against the provided value
+```
+err := query()
+if err != nil {
+    if errors.Is(err, sql.ErrNoRows) {
+        // ...
+    } else {
+        // ...
+    }
+}
+
+```
+
 #### 7.5 #52: Handling an error twice
 #### 7.6 #53: Not handling an error
 #### 7.7 #54: Not handling defer errors
 
+##############################################################################
+### 8 Concurrency: Foundations
+##############################################################################
+#### 8.1 #55: Mixing up concurrency and parallelism
+#### 8.2 #56: Thinking concurrency is always faster
+#### 8.3 #57: Being puzzled about when to use channels or mutexes
+#### 8.4 #58: Not understanding race problems
+#### 8.5 #59: Not understanding the concurrency impact of a workload type
+#### 8.6 #60: Misunderstanding Go contexts
 
+##############################################################################
+### 9 Concurrency: Practice
+##############################################################################
 
+##############################################################################
+### 10 The Standard Library
+##############################################################################
 
+##############################################################################
+### 11 Testing
+##############################################################################
 
+##############################################################################
+### 12 Optimizations
+##############################################################################
 
 
 
