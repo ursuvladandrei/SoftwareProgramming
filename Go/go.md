@@ -861,16 +861,102 @@ if err != nil {
 ```
 
 #### 7.5 #52: Handling an error twice
-#### 7.6 #53: Not handling an error
-#### 7.7 #54: Not handling defer errors
+- logging an error is handling an error; we should either log or return an error
 
+#### 7.6 #53: Not handling an error
+```
+_ = notify()
+```
+#### 7.7 #54: Not handling defer errors
+```
+defer func() { _ = rows.Close() }()
+```
+or
+```
+defer func() {
+    err := rows.Close()
+    if err != nil {
+        log.Printf("failed to close rows: %v, err)
+    }
+
+}
+
+```
 ##############################################################################
 ### 8 Concurrency: Foundations
 ##############################################################################
 #### 8.1 #55: Mixing up concurrency and parallelism
+- concurrency is about dealing with lots of things at once; parallelism is about
+doing lots of things at once
+
 #### 8.2 #56: Thinking concurrency is always faster
+- interesting explanation about Go scheduling and difference between threads and goroutines
+
 #### 8.3 #57: Being puzzled about when to use channels or mutexes
+- in general, we need mutexes for parallel goroutinbes and channels for concurrent ones
+
 #### 8.4 #58: Not understanding race problems
+- data races occur when two or more goroutines simultaneously access the same memory location
+- a data-race-free application doesn't necessarily mean deterministic results
+and at least one is writing
+```
+i := 0
+
+go func() {
+    i++
+}()
+
+go func() {
+    i++
+}()
+```
+- ways to prevent this:
+    - using atomic operations
+```
+var i int64
+
+go func() {
+    atomic.AddInt64(&i, 1)
+}()
+
+go func() {
+    atomic.AddInt64(&i, 1)
+}()
+```
+    - protecting a critical section with a mutex
+```
+i := 0
+mutex := sync.Mutex()
+
+go func() {
+    mutex.Lock()
+    i++
+    mutex.Unlock()
+}()
+
+go func() {
+    mutex.Lock()
+    i++
+    mutex.Unlock()
+}()
+```
+    - using communication and channels to ensure that a variable is updated by only one goroutine
+i := 0
+ch := make(chan int)
+
+go func() {
+    ch <- 1
+}()
+
+go func() {
+    ch <- 1
+}()
+
+i += <-ch
+i += <-ch
+
+
+
 #### 8.5 #59: Not understanding the concurrency impact of a workload type
 #### 8.6 #60: Misunderstanding Go contexts
 
@@ -897,45 +983,49 @@ if err != nil {
 ##############################################################################
 ##############################################################################
 ##############################################################################
-# Learning Go, Second Edition
+### Learning Go, Second Edition
 
 ##############################################################################
-# C1. Setting Up Your Go Environment
+#### C1. Setting Up Your Go Environment
 ##############################################################################
-# go mod init (to mark this directory as a Go module)
-# a module is also an exact specification of the dependencies of the code
-# within the module
-# go fmt file.go (automatically fixes the whitespace in your code to match
-# the standard format)
-# go vet file.go (to catch common programming errors)
-# example of a makefile:
-# .DEFAULT_GOAL := build
-# 
-# .PHONY:fmt vet build
-# fmt:
-#        go fmt ./...
-#
-# vet: fmt
-#        go vet ./...
-#
-# build: vet
-#        go build
-# to run the Makefile, call "make"
+- go mod init (to mark this directory as a Go module)
+- a module is also an exact specification of the dependencies of the code
+- within the module
+- go fmt file.go (automatically fixes the whitespace in your code to match
+the standard format)
+- go vet file.go (to catch common programming errors)
+- example of a makefile:
+```
+.DEFAULT_GOAL := build
+
+.PHONY: fmt vet build
+fmt:
+    go fmt ./...
+
+vet: fmt
+    go vet ./...
+
+build: vet
+    go build
+
+```
+- to run the Makefile, call "make"
 
 ##############################################################################
-# C2. Predeclared Types and Declarations
+#### C2. Predeclared Types and Declarations
 ##############################################################################
-# you must always use explicit conversion
-# var x int = 10
-# var b byte = 100
-# var sum3 int = x + int(b)
-# var sum4 byte = byte(x) + b
-
-# untyped constant: const x = 10
-# typed constant: const typedX int = 10
+- you must always use explicit conversion
+```
+var x int = 10
+var b byte = 100
+var sum3 int = x + int(b)
+var sum4 byte = byte(x) + b
+```
+- untyped constant: ```const x = 10```
+- typed constant: ```const typedX int = 10```
 
 ##############################################################################
-# C3. Composite Types
+#### C3. Composite Types
 ##############################################################################
 # var x [3]int (array)
 # var x = []int{10, 20, 30} (slice)
@@ -968,7 +1058,7 @@ if err != nil {
 ##############################################################################
 # C4. Blocks, Shadows, And Control Structures
 ##############################################################################
-# 
+- pay attention to shadowing variables (inside code blocks)
 
 # C5. Functions
 # C6. Pointers
