@@ -106,12 +106,64 @@ void setspent(void);
 void endspent(void);
 ```
 
+#### 8.5 Password Encryption and User Authentication
 - the *crypt()* function encrypts a password in the same manner as the standard
 login program, which is useful for programs that need to authenticate users
 ```
 char *crypt(const char *key, const char *salt);
 ```
 
-#### 8.5 Password Encryption and User Authentication
+### 9 Process Credentials - 167
 
-### 9 Process Credentials
+#### 9.1 Read User ID and Read Group ID
+- when a new process is created, it inherits these identifiers from its parents
+
+#### 9.2 Effective User ID and Effective Group ID
+- a process whose effective user ID is 0 has all the privileges of the superuser (privileged process)
+- normally, the effective user and group IDs have the same values as the corresponding read IDs
+
+#### 9.3 Set-User-ID and Set-Group-ID Programs
+- a set-user-ID program allows a process to gain privileges it would not normally have,
+by setting the process's effective user ID to the same value as the user ID (owner) of
+the executable file (similar for set-group-ID)
+```
+su
+ls -l prog
+chmod u+s prog      // turn on set-user-ID permission bit
+chmod g+s prog      // turn on set-group-ID permission bit
+```
+- when a set-user-ID program is run, the kernel sets the effective user ID of the 
+process to the same as the user ID of the executable file
+
+#### 9.4 Saved Set-User-ID and Saved Set-Group-ID
+- these allow a program to temporarily drop and regain whatever privileges are
+associated with the user ID of the execed file
+
+#### 9.5 File-System User ID and File-System Group ID
+- pretty much the same as effective user and group IDs
+
+#### 9.6 Supplementary group IDs
+- not worth going into
+
+#### 9.7 Retrieving and Modifying Process Credentials
+- retrieving and modifying real, effective, and saved set IDs
+```
+uid_t getuid(void);     // real
+uid_t geteuid(void);    // effective 
+gid_t getgit(void);
+git_t getegit(void);
+int setuid(uid_t uid);
+int setgit(gid_t gid);
+int seteuid(uid_t euid);
+int setegid(gid_t egid);
+int setreuid(uid_t ruid, uid_t euid); // real + effective
+int setregid(gid_t rgid, gid_t egid); // real + effective
+int getresuid(uid_t *ruid, uid_t *euid, uid_t *suid); // real + effective + saved
+int getresgid(gid_t *rgid, gid_t *egid, gid_t *sgid);
+int setresuid(uid_t ruid, uid_t euid, uid_t suid);
+int setresgid(gid_t rgid, gid_t egid, gid_t sgid);
+```
+
+### 10 Time - 185
+
+### 11 System Limits and Options
