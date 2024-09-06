@@ -1,0 +1,20 @@
+apiVersion: apps/v1 
+kind: Deployment 
+metadata: 
+  name: fantastic-app-deployment 
+spec: 
+  selector: 
+    matchLabels: 
+      app: fantastic-app 
+  replicas: 3 
+  template: 
+    metadata: 
+      labels: 
+        app: fantastic-app 
+    spec: 
+      containers: 
+      - name: fantastic-app 
+        image: fantastic-app:v0 
+        imagePullPolicy: Never 
+        ports: 
+        - containerPort: 8080 
