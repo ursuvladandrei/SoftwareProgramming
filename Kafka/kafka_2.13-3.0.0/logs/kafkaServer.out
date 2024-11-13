@@ -1,0 +1,7 @@
+[2024-10-08 07:25:07,599] INFO Registered kafka:type=kafka.Log4jController MBean (kafka.utils.Log4jControllerRegistration$)
+USAGE: java [options] kafka.Kafka server.properties [--override property=value]*
+Option               Description                                         
+------               -----------                                         
+--override <String>  Optional property that should override values set in
+                       server.properties file                            
+--version            Print version information and exit.                 
