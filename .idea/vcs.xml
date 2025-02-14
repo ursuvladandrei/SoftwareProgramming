@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Docker/Docker-Certified-Associate-DCA-Exam-Guide" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Docker/aks-store-demo" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Docker/kuard" vcs="Git" />
+  </component>
+</project>
